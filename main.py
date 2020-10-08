@@ -4,7 +4,7 @@ accounts_list = {
     '0001-02':{
         'password': '1234',
         'name': 'John',
-        'value': 2200,
+        'value': 2000,
         'admin':False
         },
     '0002-02':{
@@ -54,22 +54,29 @@ while True:
             value_typed = input('Digite o valor a ser sacado: ')
             money_slips_user = { }
             value_int = int(value_typed)
-            if value_int // 100 > 0 and value_int // 100 <= money_slips['100']:
-                money_slips_user['100'] = value_int // 100
-                value_int = value_int - value_int // 100 * 100
-            if value_int // 50 > 0 and value_int // 50 <= money_slips['50']:
-                money_slips_user['50'] = value_int // 50
-                value_int = value_int - value_int // 50 * 50
-            if value_int // 20 > 0 and value_int // 20 <= money_slips['20']:
-                money_slips_user['20'] = value_int // 20
-                value_int = value_int - value_int // 20 * 20
-            if value_int != 0:
-                print("O caixa não tem cédulas disponíveis para este valor")
+            desconto = value_int
+            if value_int <= accounts_list[account_typed]['value']:
+                
+                if value_int // 100 > 0 and value_int // 100 <= money_slips['100']:
+                    money_slips_user['100'] = value_int // 100
+                    value_int = value_int - value_int // 100 * 100
+                if value_int // 50 > 0 and value_int // 50 <= money_slips['50']:
+                    money_slips_user['50'] = value_int // 50
+                    value_int = value_int - value_int // 50 * 50
+                if value_int // 20 > 0 and value_int // 20 <= money_slips['20']:
+                    money_slips_user['20'] = value_int // 20
+                    value_int = value_int - value_int // 20 * 20
+                if value_int != 0:
+                    print("O caixa não tem cédulas disponíveis para este valor")
+                else:
+                    for money_bill in money_slips_user:
+                        money_slips[money_bill] -= money_slips_user[money_bill]
+                        
+                    accounts_list[account_typed]['value'] = accounts_list[account_typed]['value'] - desconto
+                    print("Pegue as notas: ")
+                    print(money_slips_user)
             else:
-                for money_bill in money_slips_user:
-                    money_slips[money_bill] -= money_slips_user[money_bill]
-                print("Pegue as notas: ")
-                print(money_slips_user)
+                print("Saldo indisponivel")
         elif option_typed == '10' and accounts_list[account_typed]['admin']:
             
             amount_typed = input('Digite a quantidade de cédulas: ')
