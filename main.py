@@ -32,3 +32,7 @@ if __name__ == '__main__':
 
         input('Precione <ENTER> para continuar ..')
         utils.clear()
+'''
+Elementos adicionados :
+    CADASTRO DE CONTA
+'''

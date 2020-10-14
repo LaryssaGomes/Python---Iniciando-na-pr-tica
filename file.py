@@ -1,6 +1,7 @@
 import os
-from main_test import test
+from main_test import test 
 print('file',__name__)
+
 from bank_account_variables import money_slips ,accounts_list
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 def open_file_bank(mode):
@@ -9,6 +10,26 @@ def open_file_bank(mode):
 def write_money_slips(file):
     for money_bill, value in money_slips.items():
         file.write(money_bill +'='+str(value)+';')
+        
+def save_money_accounts_slips():
+    save_money_slips()
+    save_accounts()
+
+def save_accounts():
+    file = open_file_bank('r')
+    lines = file.readlines()
+    file.close()
+    file = open_file_bank('w')
+    aux = 1
+    while len(lines) > aux:
+        
+        lines[aux] = ""
+        aux = aux + 1
+    file.writelines(lines[0])
+    write_bank_accounts(file)
+     
+    file.close()
+    
 
 def write_bank_accounts(file):
     for account , account_data in accounts_list.items():
@@ -52,11 +73,12 @@ def extract_bank_account(account_line):
     add_bank_account(account_data)
 
 def add_bank_account(account_data):
+
     accounts_list[account_data[0]] = {
         'name': account_data[1],
         'password': account_data[2],
         'value': float(account_data[3]),
-        'admin': bool(account_data[4])
+        'admin': eval(account_data[4]),
     }
 
 def set_money_bill_value(money_bill_value):
@@ -86,3 +108,4 @@ def save_money_slips():
     lines[0]+='\n'
     file.writelines(lines)
     file.close()
+

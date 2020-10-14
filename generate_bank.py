@@ -19,4 +19,5 @@ def make_bank_accounts(mode):
     write_bank_accounts(file)
     file.close()
 
+
 main()
